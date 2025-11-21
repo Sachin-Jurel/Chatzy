@@ -24,9 +24,9 @@ const ChatInput = () => {
             />
             <button
                 onClick={handleSendMessage}
-                className="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-full"
+                className="bg-blue-500 hover:bg-slate-900 text-white p-2 rounded-full"
             >
-                <Send className="w-5 h-5" />
+                <Send className="w-5 h-5 " />
             </button>
         </div>
     </div>

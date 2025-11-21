@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@plugin "daisyui";
 
 .hide-scrollbar {
   overflow-y: auto;          /* scrolling must be enabled */
