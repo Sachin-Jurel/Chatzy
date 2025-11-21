@@ -1,0 +1,41 @@
+import React from "react";
+import { Search, Phone, MoreVertical } from "lucide-react";
+
+const RightPanelHeader = () => {
+  return (
+    <div
+      className="
+        w-full px-4 py-3 border-b flex items-center justify-between
+        bg-white border-gray-200
+        dark:bg-slate-900 dark:border-slate-800
+      "
+    >
+      {/* Left: Avatar + Name */}
+      <div className="flex items-center gap-3">
+        <img
+          src="https://dummyimage.com/50x50/444/fff"
+          alt="avatar"
+          className="w-12 h-12 rounded-full"
+        />
+
+        <div className="flex flex-col">
+          <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+            Sachin Jurel
+          </h2>
+          <p className="text-sm text-gray-500 dark:text-gray-400">
+            Online
+          </p>
+        </div>
+      </div>
+
+      {/* Right: Icons */}
+      <div className="flex items-center gap-4">
+        <Search className="w-5 h-5 text-gray-700 dark:text-gray-300 cursor-pointer hover:text-black dark:hover:text-white" />
+        <Phone className="w-5 h-5 text-gray-700 dark:text-gray-300 cursor-pointer hover:text-black dark:hover:text-white" />
+        <MoreVertical className="w-5 h-5 text-gray-700 dark:text-gray-300 cursor-pointer hover:text-black dark:hover:text-white" />
+      </div>
+    </div>
+  );
+};
+
+export default RightPanelHeader;
