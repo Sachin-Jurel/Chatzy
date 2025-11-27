@@ -1,20 +1,33 @@
 import React from "react";
+import GetMessages from "../../context/GetMessages.js";
+import Loading from "../../components/Loading.jsx";
+import { useContext } from "react";
+import { UserContext } from "../../context/userContext.jsx";
 
 const Messages = () => {
+  const { messages, loading } = GetMessages();
+  const { user } = useContext(UserContext);
+  console.log(user);
   return (
-    <div>
-      <div className="chat chat-end ">
-        <div className="chat-bubble chat-bubble-success text-cyan-950 font-bold">
-          You have been given a great honor.
+    <>
+      {loading ? (
+        <Loading />
+      ) : (
+        <div>
+          {messages.map((message) => (
+            <div
+              className={`chat ${
+                message.senderId === user._id ? "chat-end" : "chat-start"
+              }`}
+            >
+              <div className={`chat-bubble ${message.senderId === user._id ? "chat-bubble-primary" : "chat-bubble-secondary"}`}>
+                {message.message}
+              </div>
+            </div>
+          ))}
         </div>
-      </div>
-      <div className="chat chat-start">
-        <div className="chat-bubble chat-bubble-success text-cyan-950 font-bold">
-          You have been given a great honor.
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi aliquam beatae, assumenda autem provident ipsum nemo commodi doloribus consequatur vel! Vel magni illum, quae perferendis nesciunt rerum quo repudiandae earum.
-        </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 };
 
