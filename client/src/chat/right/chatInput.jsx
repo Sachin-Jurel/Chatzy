@@ -1,34 +1,39 @@
 import { useState } from "react";
 import { Send, Smile, Paperclip } from "lucide-react";
+import SendMessages from "../../context/SendMessage.js";
 
 const ChatInput = () => {
+    const {sendMessages, loading} = SendMessages();
   const [message, setMessage] = useState("");
-    const handleSendMessage = () => {
+    const handleSendMessage = async (e) => {
         if (message.trim() !== "") {
-            console.log("Sending message:", message);
+            e.preventDefault();
+            await sendMessages(message);
             setMessage("");
         }
     };
 
   return (
-    <div className="w-full p-4 rounded-2xl bg-slate-200">
-        <div className="flex items-center gap-3">
-            <Smile className="w-6 h-6 text-gray-600 cursor-pointer hover:text-gray-800" />
-            <Paperclip className="w-6 h-6 text-gray-600 cursor-pointer hover:text-gray-800" />
+    <div className="w-full p-4 rounded-2xl bg-slate-800">
+        <form action="" onSubmit={handleSendMessage}>
+            <div className="flex items-center gap-3">
+            <Smile className="w-6 h-6 text-gray-600 cursor-pointer hover:text-white" />
+            <Paperclip className="w-6 h-6 text-gray-600 cursor-pointer hover:text-white" />
             <input 
                 type="text" 
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}    
                 placeholder="Type a message..."
-                className="flex-1 px-4 py-2 rounded-full bg-white border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="flex-1 px-4 py-2 rounded-xl bg-slate-700 focus:outline-none "
             />
             <button
-                onClick={handleSendMessage}
+                type="submit"
                 className="bg-blue-500 hover:bg-slate-900 text-white p-2 rounded-full"
             >
                 <Send className="w-5 h-5 " />
             </button>
         </div>
+        </form>
     </div>
   );
 }

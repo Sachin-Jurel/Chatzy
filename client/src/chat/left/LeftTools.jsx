@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { LogOut } from "lucide-react";
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import logo from "../../assets/ChatLogo.png"
 
 const LeftTools = () => {
   const navigate = useNavigate();
@@ -21,6 +22,9 @@ const LeftTools = () => {
 
   return (
     <div className=''>
+      <div>
+        <img src={logo} alt="No" className=' w-18  mt-8' />
+      </div>
       <div>
         <LogOut onClick={Logout} className='mb-10 ml-2 h-8 w-8 text-slate-400 rotate-180 hover:text-slate-200 cursor-pointer bottom-0 fixed'/>
       </div>

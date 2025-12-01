@@ -1,57 +1,64 @@
-import React from "react";
-import { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
-import { useEffect } from "react";
 import UseConversation from "../Manage/UseConversation.js";
-
+import { SocketContext } from "../context/SocketContext.jsx";
 
 const ChatUsers = () => {
   const [users, setUsers] = useState([]);
-  const {selectedConversation, setSelectedConversation} = UseConversation();
-  
+  const { selectedConversation, setSelectedConversation } = UseConversation();
+  const { socket, onlineUsers } = SocketContext();
+
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/users",{
-  withCredentials: true
-});
-        setUsers(res.data); 
+        const res = await axios.get("http://localhost:5000/users", {
+          withCredentials: true,
+        });
+        setUsers(res.data);
       } catch (err) {
         console.error("Error fetching users:", err);
       }
     };
     fetchUsers();
   }, []);
-  
 
   return (
     <div className="flex-1 overflow-x-hidden p-3 space-y-3 overflow-y-scroll hide-scrollbar h-full">
-      {users.map((user) => (
-        <div
-          onClick={() => {
-            setSelectedConversation(user);
-          }}
-          key={user._id}
-          className={`flex items-center gap-3 p-3 rounded-lg cursor-pointer transition
-    ${
-      selectedConversation?._id === user._id
-        ? "bg-cyan-900"
-        : "bg-slate-800 hover:bg-slate-700"
-    }
-  `}
-        >
-          <img
-            src={user.avatar || "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5OjcBCgoKDQwNGg8PGjclHyU3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3N//AABEIAJQAlAMBIgACEQEDEQH/xAAaAAEAAwEBAQAAAAAAAAAAAAAAAQYHBQIE/8QAOBAAAgECAwUDCgQHAAAAAAAAAAECAwQFBhESITFBUROBoQciI0JhcXKxwdEVMjORFDRSYpKTov/EABYBAQEBAAAAAAAAAAAAAAAAAAABAv/EABYRAQEBAAAAAAAAAAAAAAAAAAARAf/aAAwDAQACEQMRAD8ApYANAAAAAAAAAAAAAABJLgAAAAAAAAAAAAAAASAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAumV8k1L6nG7xXapUJb4UVulNdX0XiBTYQlUls04ylLpFas+tYTiTipKwudl8+yZs1jh9nh9NU7O3p0YpepHe+8+lolGDVac6UtirCUJdJRaPJul1Z295TdO6oU60WtNJx1KPmTIqp053WC66JaytpPXd/a/oKKED1KLjJxkmmtzT5HkoAAAAAI1JAAAAAAAAAAtmQcCjiV7K9uY621s1opcJz6dxqC3LccXJ9krPLllDTzqlPtZ+1y3/Y7WhAZKI0JIBDJAGd+UTAo0JxxW1hswqS2a6S3KXKXeUY2/GrSN9hV3az4VKUkvfpuMR0a3PiuJRAAKAAAAAAAAAAACX5X7gBo3LCZKWFWTjvXYU9P8UfWVzIl+r7LtCLfpbb0M1r04eHyLGQAAQAAB4qNKE2+Ci/kYRWadao1wcm1+5suZ76OHYFd3DlpJwcIfE9yMXLgAAoAAAAAAAAAAAAAO7lHHXgmJbdTV2tbzaqXJde412jVp1qUKlGanTnFOMo8GjBTuZdzPe4G+zh6a1b1dGb3L4ehBsIK7hudMFvYLtK7tamm+FdaePA6ixjDHDbWI2mz17aP3IPuInJQi5SaUUtW29EjhYhnDBLKLau1XmvUoLa8eHiUTMWb7zGFKhSX8NaP1IvzpfE/oUe88ZhWL3sbe1nrZ27ey+U5c5fYrI3EFAAAAAAAAAAAAAAAAEg6eDYDiGMy1s6Ho9d9Wb0gu/n3F0w7ye2VJRliFzUrz4uMFsR/fiKM37yN3sNntstYNbfpYbQ16zjtfM+z8MsFu/grb/UhRhq96fUlG0XGXsHude1w63evNR0fgcPEfJ/h9dN2NarbT6Pz4ijMgdnG8s4lg+s69HtKCe6tT3x7+aOMKAJIAAAAAAAAAAEgOehe8qZKVSEL3GYPZekoW3DX2y+xGQctKts4rf004r+XpyXF/1P6GgsgiFOFOnGnTjGMI8IxWiR63EEogAAAAAIcYtNNaxa0a6lJzTkmnXjO7weKhW4yoerP3dGXcAYJOMqc5QnFxlF6OL4pnk0jPuW1c0JYpYwSr01rWgl+pHr70Zx8iiAAUAAAAAA6OX8Nli+L29mm1Gb1nLpFb2c4u3kutdu/vbuS3UqUacX7ZPV+EfEmjRKNOFKlClSjswglGKXJI9gEAAAAAAAAAAAGk1o1qjGc04U8HxqvbxjpRk+0o/C/s9UbMZ/5U6Gk8OuUuKnTfgyihAAoAAAAABo3ktS/D76XPtor/AJAGi7gAyAAAAAAAAAAAFM8qEE8ItJv80bjd3xYBcGagAoAAD//Z"}
-            alt={user.name}
-            className="w-12 h-12 rounded-full object-cover"
-          />
+      {users.map((user) => {
+        const isOnline = onlineUsers.includes(user._id);
 
-          <div>
-            <p className="text-slate-100 font-medium">{user.name}</p>
-            <p className="text-slate-400 text-sm">{user.lastMessage || "No message"}</p>
+        return (
+          <div
+            onClick={() => setSelectedConversation(user)}
+            key={user._id}
+            className={`flex items-center gap-3 p-3 rounded-lg cursor-pointer transition 
+              ${
+                selectedConversation?._id === user._id
+                  ? "bg-cyan-900"
+                  : "bg-slate-800 hover:bg-slate-700"
+              }
+            `}
+          >
+            <div className={`avatar ${isOnline ? "avatar-online" : ""}`}>
+              <img
+                src={
+                  user.avatar ||
+                  "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5OjcBCgoKDQwNGg8PGjclHyU3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3N//AABEIAJQAlgMBIgACEQEDEQH/xAAbAAEAAwEBAQEAAAAAAAAAAAAAAQYHBAUDAv/EADkQAAEEAQICBgYHCQAAAAAAAAABAgMEBQYREjETISJBUWEHcYGRodEjJDJCYrHBFBUzUnJzgrLw/8QAFgEBAQEAAAAAAAAAAAAAAAAAAAEC/8QAFhEBAQEAAAAAAAAAAAAAAAAAABEB/9oADAMBAAIRAxEAPwClgA0AAAAAAAAAAAAAANk3AAkgAASQSBAAAAAAAAJAAEAAAAAAAAAAAAAAAAAAAAAAAAAAACS1aW0dPlmttXVdBTX7KJ9qX1eCeYFVaiudwtRVd4J1qdbMVkXs4mUbLm+KRKbHjsRQxkaMpVo4tubkTdy+3mdq+RKMHngmru4Z4pI3eD2qh+Dd5oIp2cE8bJGrza9EVCoag0JWsMfPiNq86dfRKu7H+rwUUZuQfWxBLWnfBYjdHKxdnNdzRT5lEAAAAACqAAAAAAAAAALForB/vjJ8Uzfqtftyb8nL3NNZY1rWo1iIjUTZETuQrmgKSVtNwybduw50rl+CfBCybEAINiSAQpIAp+v8C25RdkazPrNdO3sn22d/uMz9pvT2o9rmuTdrk2VDD8rV/YcnaqpttFK5qerfqKOQAFAAAAAAAAAAACSABs+lHI7TeO4dtugb7z1ipeji+2zg1quX6WrIqbfhXrRfzQtpAABAAAELzMa1aqO1LkFbtt0u3wQ2G1OytXlsSqiMiarnKvghhtuw63bmsPXd0r1evtXcuD4gAoAAAAAAAAAAAAAPV03mJMJk2Wmoro17MrE+835mw07UFytHYqyJJFIm7XIYSetgdQXsHKq1XI+Fy9uF69lfPyXzINnBWMXrnEXGoll7qcvekqdn2OQ9lmZxb2cbcjUVvj0zfmQdwPFu6qwlNqq+/HI5PuQ9tV9xTNQa5s32ur45jq1depXqv0jk/Qo6vSDqNszVxFKRHMRfrD28lX+X5lGC9a7rzIKJIAAAAAAAAAAAAAAAJB34nD38vLwUYFeic3quzW+tS5430eV2tR2StvkcvWscScKJ7RRnhHV5Gy1dL4Stt0eOhcqd8icX5namMx7U2SjWRP7TRRh3tQlDap8FibH8XHVl/wAET8jxr+g8TYaq1llqvXkrF4k9yijLiCx5rRuTxiOkjalqBOb4k609bSuCgCSAAAAAAAAAABIEF10poxbjWXMs17IF62QcnP8ANfBD86D0029I3JX40Wuxfoo3cnr4r5IaSQfiCCKvC2GCNscbU2a1qbIh9OogIQSAAAAAd+5WdS6QqZVr56yNr3OaOROy/wDqT9SzADCrtSxQsvrW4limYuzmr/3I5zX9W6ejzlJVjRrbsabxP8fwr5GRSMfE90cjVa9q7ORe5fAo/IAKAAAAAAdmHoPymTr0o14VmdsrvBE61X3Ipxlw9GVXpczYtKnVBBsnrcvyRSaNIqwR1a8deBvDHG3hankfUAgAAAAAAAAAAAZl6SMT+yZNmQibtFa6n7d0ifNDTSs+kODptNSv74ZGP+O36gZQADQAAAAABoHorRODJO7+KNP9gBovoAMgAAAAAAAAAAB4+sGNk0xkUdySHf3KgAwY0gANAAAP/9k="
+                }
+                alt={user.name}
+                className="w-12 h-12 rounded-full object-cover"
+              />
+            </div>
+
+            <div>
+              <p className="text-slate-100 font-medium">{user.name}</p>
+              <p className="text-slate-400 text-sm">
+                {user.lastMessage || "No message"}
+              </p>
+            </div>
           </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 };

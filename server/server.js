@@ -5,14 +5,11 @@ dotenv.config();
 import UserRouter from "./Routes/userRoute.js";
 import MessageRouter from "./Routes/MessageRoute.js"
 import User from "./models/user.js";
-// import io from "socket.io";
-// import Message from "./models/message.model.js";
-// import Conversation from "./models/conversation.js";
+import {app,server} from "./SocketIO/SocketServer.js"
 
 import connectDB from "./config/db.js";
 connectDB();
 
-const app = express();
 const PORT = process.env.PORT || 5000;
 
 import cookieParser from "cookie-parser";
@@ -44,6 +41,6 @@ app.get("/users", auth ,async (req, res) => {
 app.use("/", UserRouter);
 app.use("/message", MessageRouter);
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
