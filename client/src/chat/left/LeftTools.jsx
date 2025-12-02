@@ -21,12 +21,12 @@ const LeftTools = () => {
   }
 
   return (
-    <div className=''>
+    <div className='flex justify-between mx-8'>
       <div>
-        <img src={logo} alt="No" className=' w-18  mt-8' />
+        <img src={logo} alt="No" className=' w-14 ' />
       </div>
       <div>
-        <LogOut onClick={Logout} className='mb-10 ml-2 h-8 w-8 text-slate-400 rotate-180 hover:text-slate-200 cursor-pointer bottom-0 fixed'/>
+        <LogOut onClick={Logout} className=' mt-3 h-8 w-8 text-slate-400 rotate-180 hover:text-slate-200 cursor-pointer '/>
       </div>
     </div>
   )

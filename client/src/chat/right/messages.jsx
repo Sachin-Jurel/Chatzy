@@ -22,7 +22,7 @@ const Messages = () => {
       {loading ? (
         <Loading />
       ) : (
-        <div className="pb-10">
+        <div className="pb-10 ">
           {messages.map((message) => (
             <div
               key={message._id}  

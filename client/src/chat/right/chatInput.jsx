@@ -14,17 +14,17 @@ const ChatInput = () => {
     };
 
   return (
-    <div className="w-full p-4 rounded-2xl bg-slate-800">
+    <div className="lg:w-full md:w-[70%] p-4 rounded-2xl bg-slate-800">
         <form action="" onSubmit={handleSendMessage}>
             <div className="flex items-center gap-3">
-            <Smile className="w-6 h-6 text-gray-600 cursor-pointer hover:text-white" />
-            <Paperclip className="w-6 h-6 text-gray-600 cursor-pointer hover:text-white" />
+            <Smile className="w-6 hidden sm:block md:block text-gray-600 cursor-pointer hover:text-white" />
+            <Paperclip className="w-6 hidden sm:block md:block text-gray-600 cursor-pointer hover:text-white" />
             <input 
                 type="text" 
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}    
                 placeholder="Type a message..."
-                className="flex-1 px-4 py-2 rounded-xl bg-slate-700 focus:outline-none "
+                className="flex-1 px-4 sm:px-2 py-2 rounded-xl bg-slate-700 focus:outline-none "
             />
             <button
                 type="submit"
