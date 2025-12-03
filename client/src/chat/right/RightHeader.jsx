@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import { Search, Phone, MoreVertical } from "lucide-react";
 import UseConversation from "../../Manage/UseConversation";
 import {SocketContext} from "../../context/SocketContext.jsx";
 
@@ -33,13 +32,6 @@ const RightPanelHeader = () => {
             { isOnline ? "Online" : "Offline" }
           </p>
         </div>
-      </div>
-
-      {/* Right: Icons */}
-      <div className="flex items-center gap-4">
-        <Search className="w-5 h-5 text-gray-700 dark:text-gray-300 cursor-pointer hover:text-black dark:hover:text-white" />
-        <Phone className="w-5 h-5 text-gray-700 dark:text-gray-300 cursor-pointer hover:text-black dark:hover:text-white" />
-        <MoreVertical className="w-5 h-5 text-gray-700 dark:text-gray-300 cursor-pointer hover:text-black dark:hover:text-white" />
       </div>
     </div>
   );
