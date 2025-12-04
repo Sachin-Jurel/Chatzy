@@ -18,7 +18,7 @@ export const SocketProvider = ({ children }) => {
 
     useEffect(() => {
         if (user) {
-            const newSocket = io("https://chatzy-bx9a.onrender.com/", {
+            const newSocket = io("http://localhost:5000/", {
                 query: { userId: user._id },
             });
             setSocket(newSocket);

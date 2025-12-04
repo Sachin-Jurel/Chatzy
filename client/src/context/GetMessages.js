@@ -14,7 +14,7 @@ const GetMessages = () => {
 
       try {
         const res = await axios.get(
-          `https://chatzy-bx9a.onrender.com/message/get/${selectedConversation._id}`,
+          `http://localhost:5000/message/get/${selectedConversation._id}`,
           { withCredentials: true }
         );
 
