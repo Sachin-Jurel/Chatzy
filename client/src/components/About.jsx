@@ -12,8 +12,8 @@ const About = () => {
       <Send className="absolute top-32 right-10 w-8 h-8 sm:w-10 sm:h-10 text-purple-500 animate-spin-slow" />
 
       {/* Logo */}
-      <div className="bg-white/10 backdrop-blur-xl p-4 sm:p-6 rounded-3xl shadow-2xl border border-white/10">
-        <img src={logo} alt="Chat Logo" className="w-20 h-20 sm:w-28 sm:h-28 object-contain" />
+      <div className="bg-white/10 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/10">
+        <img src={logo} alt="Chat Logo" className="lg:w-50 lg:h-50 w-30 h-30 object-contain" />
       </div>
 
       {/* Title */}
