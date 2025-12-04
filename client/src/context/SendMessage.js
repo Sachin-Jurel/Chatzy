@@ -14,7 +14,7 @@ const SendMessages = () => {
     const tempMsg = {
       _id: Date.now().toString(),
       senderId,
-      receiverId: selectedConversation.userId,
+      receiverId: selectedConversation?.receiverId,
       message: messageText,
     };
 

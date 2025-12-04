@@ -53,7 +53,7 @@ const ChatUsers = () => {
             <div>
               <p className="text-slate-100 font-medium">{user.name}</p>
               <p className="text-slate-400 text-sm">
-                {user.lastMessage || "No message"}
+                {user.lastMessage || "..."}
               </p>
             </div>
           </div>

@@ -31,8 +31,6 @@ router.post("/send/:id", auth, async (req, res) => {
     });
 
     conversation.messages.push(newMessage._id);
-    await User.findByIdAndUpdate(senderId, { lastMessage: message });
-await User.findByIdAndUpdate(receiverId, { lastMessage: message });
 
     await Promise.all([conversation.save(), newMessage.save()]);
     const receiverSocketId = await getReceiverSocketId(receiverId);

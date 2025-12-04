@@ -21,11 +21,10 @@ io.on("connection", (socket) => {
     const userId = socket.handshake.query.userId;
     if(userId) {
         users[userId] = socket.id;
-        console.log(users);
     }
     io.emit("getOnline", Object.keys(users));
     socket.on("disconnect", () => {
-        console.log("user disconnected", socket.id);
+        console.log("user disconnected");
         delete users[userId];
         io.emit("getOnline", Object.keys(users));
     });
